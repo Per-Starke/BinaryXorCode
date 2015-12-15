@@ -87,6 +87,7 @@ bool_numbersAreCorrect = checkIfOnly_1_used(plainKey, plaintext)
 
 print(bool_numbersAreCorrect)
 
+
 matchedKey = matchKeyLengthToPlaintextLenght(plainKey, plaintext)
 
 print(matchedKey)
