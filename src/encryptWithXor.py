@@ -81,8 +81,6 @@ def matchKeyLengthToPlaintextLenght(key, plaintext):
 
 
 
-
-
 bool_numbersAreCorrect = checkIfOnly_1_used(plainKey, plaintext)
 
 print(bool_numbersAreCorrect)
