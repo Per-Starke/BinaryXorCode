@@ -8,7 +8,7 @@ decryptedText = ""
 
 
 
-def checkIfOnly_1_used(key, plaintext):  # checks if text and key is in binary code (made of only 1's and 0's)
+def checkIfBinaryIsUsed(key, plaintext):  # checks if text and key is in binary code (made of only 1's and 0's)
 
     textNumbersAreCorrect = None  # if text is binary => true, else => false
     keyNumbersAreCorrect = None  # if key is binary => true, else => false
@@ -40,50 +40,44 @@ def checkIfOnly_1_used(key, plaintext):  # checks if text and key is in binary c
 
 
 def matchKeyLengthToPlaintextLenght(key, plaintext):
+    if checkIfBinaryIsUsed(key, plaintext) == True:
+        matchedKey = key  # for case if length of key and text is the same
 
-    matchedKey = key  # for case if length of key and text is the same
+        if len(plaintext) > len(key):   # if key is to short
 
-    if len(plaintext) > len(key):   # if key is to short
+            lengthDiff = len(plaintext) - len(key)  # the length difference between key and plaintext
+            matchedKeyAsList = []
 
-        lengthDiff = len(plaintext) - len(key)  # the length difference between key and plaintext
-        matchedKeyAsList = []
+            for letter in key:  # makes key a list
 
-        for letter in key:  # makes key a list
+                matchedKeyAsList.append(letter)
 
-            matchedKeyAsList.append(letter)
+            matchedKeyAsList.append(matchedKeyAsList[0])  # and add's it's first letter to the end
 
-        matchedKeyAsList.append(matchedKeyAsList[0])  # and add's it's first letter to the end
+            if lengthDiff > 1:   # if more than one letter needs to be added to the key
 
-        if lengthDiff > 1:   # if more than one letter needs to be added to the key
+                for i in range (1, lengthDiff):  # it is appended to the end of the list
 
-            for i in range (1, lengthDiff):  # it is appended to the end of the list
+                    matchedKeyAsList.append(matchedKeyAsList[i])
 
-                matchedKeyAsList.append(matchedKeyAsList[i])
+            matchedKey = "".join(matchedKeyAsList)   # joins key list back to String
 
-        matchedKey = "".join(matchedKeyAsList)   # joins key list back to String
+        elif len(plaintext) < len(key):   # if key is to long
 
-    elif len(plaintext) < len(key):   # if key is to long
+            lengthDiff = len(key) - len(plaintext)  # difference between key and text
+            matchedKeyAsList = []
 
-        lengthDiff = len(key) - len(plaintext)  # difference between key and text
-        matchedKeyAsList = []
+            for letter in key:  # makes key a list
 
-        for letter in key:  # makes key a list
+                matchedKeyAsList.append(letter)
 
-            matchedKeyAsList.append(letter)
+            for i in range (0, lengthDiff):  # and removes as many items from 0 to length diff, so length of text and key is equal
+                matchedKeyAsList.pop(i)
 
-        for i in range (0, lengthDiff):  # and removes as many items from 0 to length diff, so length of text and key is equal
-            matchedKeyAsList.pop(i)
+            matchedKey = "".join(matchedKeyAsList)  # joins key list back to String
 
-        matchedKey = "".join(matchedKeyAsList)  # joins key list back to String
-
-    return matchedKey
-
-
-
-
-bool_numbersAreCorrect = checkIfOnly_1_used(plainKey, plaintext)
-
-print(bool_numbersAreCorrect)
+    print("Only binary is used: " , checkIfBinaryIsUsed(key, plaintext))
+    return matchedKey   
 
 
 matchedKey = matchKeyLengthToPlaintextLenght(plainKey, plaintext)
