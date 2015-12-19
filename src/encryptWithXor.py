@@ -28,6 +28,7 @@ def checkIfBinaryIsUsed(key, plaintext):  # checks if text and key is in binary 
             textNumbersAreCorrect = True
         else:
             textNumbersAreCorrect = False
+            break
 
     if (keyNumbersAreCorrect == True) & (textNumbersAreCorrect == True):  # add's both checks to 1
 
@@ -39,8 +40,10 @@ def checkIfBinaryIsUsed(key, plaintext):  # checks if text and key is in binary 
 
 
 
-def matchKeyLengthToPlaintextLenght(key, plaintext):
-    if checkIfBinaryIsUsed(key, plaintext) == True:
+def matchKeyLengthToPlaintextLenght(key, plaintext):  # only works if binary_only numbers are used in key and plaintext! elif returns None
+    matchedKey = None
+    onlyBinaryUsed = checkIfBinaryIsUsed(key, plaintext)
+    if onlyBinaryUsed == True:
         matchedKey = key  # for case if length of key and text is the same
 
         if len(plaintext) > len(key):   # if key is to short
@@ -76,8 +79,8 @@ def matchKeyLengthToPlaintextLenght(key, plaintext):
 
             matchedKey = "".join(matchedKeyAsList)  # joins key list back to String
 
-    print("Only binary is used: " , checkIfBinaryIsUsed(key, plaintext))
-    return matchedKey   
+    print("Only binary is used: " , onlyBinaryUsed)
+    return matchedKey
 
 
 matchedKey = matchKeyLengthToPlaintextLenght(plainKey, plaintext)
