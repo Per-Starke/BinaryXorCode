@@ -4,7 +4,6 @@ __author__ = 'Per'
 
 plaintext = "001100"  # STRING!!!     will become input later
 plainKey = "0110"
-decryptedText = ""
 
 
 
@@ -37,8 +36,6 @@ def checkIfBinaryIsUsed(key, plaintext):  # checks if text and key is in binary 
         allNumbersAreCorrect = False
 
     return allNumbersAreCorrect
-
-
 
 def matchKeyLengthToPlaintextLenght(key, plaintext):  # only works if binary_only numbers are used in key and plaintext! elif returns None
     matchedKey = None
@@ -83,9 +80,31 @@ def matchKeyLengthToPlaintextLenght(key, plaintext):  # only works if binary_onl
     return matchedKey
 
 
+
 matchedKey = matchKeyLengthToPlaintextLenght(plainKey, plaintext)
 
-print(matchedKey)
+def encryptWithXor(matchedKey, plaintext):
+    counter = 0
+    encryptedTextAsList = []
+    for char in plaintext:
+        encryptedChar = ""
+        charInKey = matchedKey[counter]
+        if (char == "0") & (charInKey == "0"):
+            encryptedChar = "0"
+        elif (char == "0") & (charInKey == "1"):
+            encryptedChar = "1"
+        elif (char == "1") & (charInKey == "0"):
+            encryptedChar = "1"
+        elif (char == "1") & (charInKey == "1"):
+            encryptedChar = "0"
+        encryptedTextAsList.append(encryptedChar)
+        counter += 1
+    encryptedText = "".join(encryptedTextAsList)
+    return encryptedText
 
 
+encryptedText = encryptWithXor(matchedKey, plaintext)
+print(encryptedText)
 
+decryptedText = encryptWithXor(matchedKey, encryptedText)
+print(decryptedText)
