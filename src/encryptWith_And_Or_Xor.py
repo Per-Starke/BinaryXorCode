@@ -83,6 +83,47 @@ def matchKeyLengthToPlaintextLenght(key, plaintext):  # only works if binary_onl
 
 matchedKey = matchKeyLengthToPlaintextLenght(plainKey, plaintext)
 
+
+def encryptWithAnd(matchedKey, plaintext):
+    counter = 0
+    encryptedTextAsList = []
+    for char in plaintext:
+        encryptedChar = ""
+        charInKey = matchedKey[counter]
+        if (char == "0") & (charInKey == "0"):
+            encryptedChar = "0"
+        elif (char == "0") & (charInKey == "1"):
+            encryptedChar = "0"
+        elif (char == "1") & (charInKey == "0"):
+            encryptedChar = "0"
+        elif (char == "1") & (charInKey == "1"):
+            encryptedChar = "1"
+        encryptedTextAsList.append(encryptedChar)
+        counter += 1
+    encryptedText = "".join(encryptedTextAsList)
+    return encryptedText
+
+
+def encryptWithOr(matchedKey, plaintext):
+    counter = 0
+    encryptedTextAsList = []
+    for char in plaintext:
+        encryptedChar = ""
+        charInKey = matchedKey[counter]
+        if (char == "0") & (charInKey == "0"):
+            encryptedChar = "0"
+        elif (char == "0") & (charInKey == "1"):
+            encryptedChar = "1"
+        elif (char == "1") & (charInKey == "0"):
+            encryptedChar = "1"
+        elif (char == "1") & (charInKey == "1"):
+            encryptedChar = "1"
+        encryptedTextAsList.append(encryptedChar)
+        counter += 1
+    encryptedText = "".join(encryptedTextAsList)
+    return encryptedText
+
+
 def encryptWithXor(matchedKey, plaintext):
     counter = 0
     encryptedTextAsList = []
@@ -102,9 +143,23 @@ def encryptWithXor(matchedKey, plaintext):
     encryptedText = "".join(encryptedTextAsList)
     return encryptedText
 
+# !   1 = And, 2 = Or, 3 = Xor   !
+def whichEncryption():
+    input_encryption = input("Which encryption do you want to use? (1 = And, 2 = Or, 3 = Xor) ")
+    return input_encryption
 
-encryptedText = encryptWithXor(matchedKey, plaintext)
-print(encryptedText)
 
-decryptedText = encryptWithXor(matchedKey, encryptedText)
-print(decryptedText)
+whichEncryption = whichEncryption()
+
+encryptedText = ""
+
+if whichEncryption == "1":
+    encryptedText = encryptWithAnd(matchedKey, plaintext)
+elif whichEncryption == "2":
+    encryptedText = encryptWithOr(matchedKey, plaintext)
+elif whichEncryption == "3":
+    encryptedText = encryptWithXor(matchedKey, plaintext)
+
+print(plaintext)
+print(matchedKey)
+print("\n" + encryptedText)
